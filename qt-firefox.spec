@@ -38,6 +38,7 @@ BuildRequires:	libpng-devel >= 1.2.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	nss-devel >= 3.8
 BuildRequires:	nspr-devel >= 1:4.5.0-1
+BuildRequires:	zip
 Conflicts:	mozilla-firefox
 Requires:	%{name}-lang-resources = %{version}
 %if %{with ft218}

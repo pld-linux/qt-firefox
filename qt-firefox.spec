@@ -32,7 +32,7 @@ BuildRequires:	freetype-devel < 1:2.1.8
 BuildConflicts:	freetype-devel = 2.1.8
 %endif
 BuildRequires:	gtk+2-devel >= 1:2.0.0
-BuildRequires:	libIDL-devel >= 0.8.0
+#BuildRequires:	libIDL-devel >= 0.8.0
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libpng-devel >= 1.2.0
 BuildRequires:	libstdc++-devel
@@ -138,7 +138,8 @@ cp -f %{_datadir}/automake/config.* directory/c-sdk/config/autoconf
 	--with-system-png \
 	--with-system-zlib \
 	--enable-single-profile \
-	--disable-profilesharing
+	--disable-profilesharing \
+	--without-libIDL
 
 %{__make}
 

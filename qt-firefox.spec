@@ -128,7 +128,7 @@ cp -f %{_datadir}/automake/config.* directory/c-sdk/config/autoconf
 	--enable-strip \
 	--enable-strip-libs \
 	--enable-xinerama \
-	--enable-xft \
+	--disable-xft \
 	--enable-xterm-updates \
 	--enable-default-toolkit="qt" \
 	--enable-application="browser" \

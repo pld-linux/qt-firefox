@@ -131,6 +131,7 @@ cp -f %{_datadir}/automake/config.* directory/c-sdk/config/autoconf
 	--enable-xft \
 	--enable-xterm-updates \
 	--enable-default-toolkit="qt" \
+	--enable-application="browser" \
 	--with-pthreads \
 	--with-system-nspr \
 	--with-system-jpeg \

@@ -116,7 +116,7 @@ cp -f %{_datadir}/automake/config.* directory/c-sdk/config/autoconf
 	--disable-tests \
 	--disable-gnomevfs \
 	--disable-gnomeui \
-	--disable-static 
+	--disable-static \
 	--disable-xprint \
 	--enable-crypto \
 	--disable-pango \

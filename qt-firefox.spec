@@ -147,7 +147,7 @@ cp -f %{_datadir}/automake/config.* directory/c-sdk/config/autoconf
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir},%{_pixmapsdir},%{_desktopdir}}
 
-%{__make} install  \
+%{__make} -C xpinstall/packager  \
 	MOZ_PKG_APPNAME="mozilla-firefox" \
 	MOZILLA_BIN="\$(DIST)/bin/firefox-bin" \
 	EXCLUDE_NSPR_LIBS=1

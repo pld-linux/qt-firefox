@@ -22,7 +22,6 @@ Patch0:		%{name}-alpha-gcc3.patch
 Patch1:		%{name}-nss.patch
 Patch2:		%{name}-lib_path.patch
 Patch3:		%{name}-freetype.patch
-Patch4:		%{name}-gcc34.patch
 URL:		http://www.mozilla.org/projects/firefox/
 BuildRequires:	automake
 %if %{with ft218}
@@ -37,7 +36,7 @@ BuildRequires:	libIDL-devel >= 0.8.0
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libpng-devel >= 1.2.0
 BuildRequires:	libstdc++-devel
-BuildRequires:	nss-devel >= 3.8
+BuildRequires:	nss-devel >= 3.9.2-2
 BuildRequires:	zip
 Obsoletes:	mozilla-firefox
 Provides:	mozilla-firefox
@@ -49,7 +48,7 @@ Requires:	freetype >= 2.1.3
 Requires:	freetype < 1:2.1.8
 Conflicts:	freetype = 2.1.8
 %endif
-Requires:	nss >= 3.8
+Requires:	nss >= 3.9.2-2
 #PreReq:		XFree86-Xvfb
 Obsoletes:	mozilla-firebird
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -89,7 +88,6 @@ Anglojêzyczne zasoby dla Mozilla-FireFox
 %patch1 -p1
 %patch2 -p1
 %{?with_ft218:%patch3 -p1}
-%patch4 -p0
 
 %build
 export CFLAGS="%{rpmcflags}"

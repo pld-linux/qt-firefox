@@ -94,6 +94,7 @@ Anglojêzyczne zasoby dla Mozilla-FireFox
 %build
 export CFLAGS="%{rpmcflags}"
 export CXXFLAGS="%{rpmcflags}"
+export LDFLAGS="%{rpmldflags} -L%{_prefix}/X11R6/%{_lib}"
 export MOZ_PHOENIX="1"
 export BUILD_OFFICIAL="1"
 export MOZILLA_OFFICIAL="1"

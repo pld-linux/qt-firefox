@@ -22,6 +22,7 @@ Patch0:		%{name}-alpha-gcc3.patch
 Patch1:		%{name}-nss.patch
 Patch2:		%{name}-lib_path.patch
 Patch3:		%{name}-freetype.patch
+Patch4:		%{name}-gcc34.patch
 URL:		http://www.mozilla.org/projects/firefox/
 BuildRequires:	automake
 %if %{with ft218}
@@ -37,9 +38,9 @@ BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libpng-devel >= 1.2.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	nss-devel >= 3.8
-BuildRequires:	nspr-devel >= 1:4.5.0-1
 BuildRequires:	zip
-Conflicts:	mozilla-firefox
+Obsoletes:	mozilla-firefox
+Provides:	mozilla-firefox
 Requires:	%{name}-lang-resources = %{version}
 %if %{with ft218}
 Requires:	freetype >= 1:2.1.3
@@ -49,11 +50,11 @@ Requires:	freetype < 1:2.1.8
 Conflicts:	freetype = 2.1.8
 %endif
 Requires:	nss >= 3.8
-PreReq:		XFree86-Xvfb
+#PreReq:		XFree86-Xvfb
 Obsoletes:	mozilla-firebird
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_firefoxdir	%{_libdir}/%{name}
+%define		_firefoxdir	%{_libdir}/mozilla-firefox
 # mozilla and firefox provide their own versions
 %define		_noautoreqdep	libgkgfx.so libgtkembedmoz.so libgtkxtbin.so libjsj.so libmozjs.so libxpcom.so libxpcom_compat.so libnspr4.so
 %define		_noautoprovfiles libnspr4.so libplc4.so libplds4.so
@@ -88,6 +89,7 @@ Anglojêzyczne zasoby dla Mozilla-FireFox
 %patch1 -p1
 %patch2 -p1
 %{?with_ft218:%patch3 -p1}
+%patch4 -p1
 
 %build
 export CFLAGS="%{rpmcflags}"
@@ -129,11 +131,10 @@ cp -f %{_datadir}/automake/config.* directory/c-sdk/config/autoconf
 	--enable-strip-libs \
 	--enable-xinerama \
 	--disable-xft \
-	--enable-xterm-updates \
 	--enable-default-toolkit="qt" \
 	--enable-application="browser" \
 	--with-pthreads \
-	--with-system-nspr \
+	--without-system-nspr \
 	--with-system-jpeg \
 	--with-system-png \
 	--with-system-zlib \
@@ -146,7 +147,7 @@ cp -f %{_datadir}/automake/config.* directory/c-sdk/config/autoconf
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir},%{_pixmapsdir},%{_desktopdir}}
 
-%{__make} -C xpinstall/packager \
+%{__make} install  \
 	MOZ_PKG_APPNAME="mozilla-firefox" \
 	MOZILLA_BIN="\$(DIST)/bin/firefox-bin" \
 	EXCLUDE_NSPR_LIBS=1
@@ -159,13 +160,12 @@ install other-licenses/branding/firefox/content/icon32.png $RPM_BUILD_ROOT%{_pix
 #install -m0644 bookmarks.html $RPM_BUILD_ROOT%{_firefoxdir}/defaults/profile/
 #install -m0644 bookmarks.html $RPM_BUILD_ROOT%{_firefoxdir}/defaults/profile/US/
 
-install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
+install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}/mozilla-firefox.desktop
 
-grep locale $RPM_BUILD_ROOT%{_firefoxdir}/chrome/installed-chrome.txt > $RPM_BUILD_ROOT%{_firefoxdir}/chrome/%{name}-en-US-installed-chrome.txt
-grep -v locale $RPM_BUILD_ROOT%{_firefoxdir}/chrome/installed-chrome.txt > $RPM_BUILD_ROOT%{_firefoxdir}/chrome/%{name}-misc-installed-chrome.txt
+grep locale $RPM_BUILD_ROOT%{_firefoxdir}/chrome/installed-chrome.txt > $RPM_BUILD_ROOT%{_firefoxdir}/chrome/mozilla-firefox-en-US-installed-chrome.txt
+grep -v locale $RPM_BUILD_ROOT%{_firefoxdir}/chrome/installed-chrome.txt > $RPM_BUILD_ROOT%{_firefoxdir}/chrome/mozilla-firefox-misc-installed-chrome.txt
 
-rm -rf US classic comm embed-sample en-{US,mac,unix,win} modern pipnss pippki toolkit
-rm -f en-win.jar en-mac.jar embed-sample.jar modern.jar
+# the one who added the rm's i removed is [bad, evil words].
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -255,17 +255,17 @@ cat %{_firefoxdir}/chrome/*-installed-chrome.txt >%{_firefoxdir}/chrome/installe
 %{_firefoxdir}/components/myspell
 %{_firefoxdir}/plugins
 %{_firefoxdir}/searchplugins
-%{_firefoxdir}/icons
+#%{_firefoxdir}/icons
 %{_firefoxdir}/defaults
 %{_firefoxdir}/greprefs
 %dir %{_firefoxdir}/init.d
 %attr(755,root,root) %{_firefoxdir}/*.so
 %attr(755,root,root) %{_firefoxdir}/*.sh
-%attr(755,root,root) %{_firefoxdir}/m*
+#%attr(755,root,root) %{_firefoxdir}/m*
 %attr(755,root,root) %{_firefoxdir}/f*
 %attr(755,root,root) %{_firefoxdir}/reg*
 %attr(755,root,root) %{_firefoxdir}/x*
-%attr(755,root,root) %{_firefoxdir}/T*
+#%attr(755,root,root) %{_firefoxdir}/T*
 %ifarch %{ix86}
 %attr(755,root,root) %{_firefoxdir}/elf-dynstr-gc
 %endif
@@ -276,20 +276,23 @@ cat %{_firefoxdir}/chrome/*-installed-chrome.txt >%{_firefoxdir}/chrome/installe
 %dir %{_firefoxdir}/chrome
 %{_firefoxdir}/chrome/browser.jar
 # -chat subpackage?
-#%{_firefoxdir}/chrome/chatzilla.jar
+%{_firefoxdir}/chrome/chatzilla.jar
 %{_firefoxdir}/chrome/classic.jar
 %{_firefoxdir}/chrome/comm.jar
 %{_firefoxdir}/chrome/content-packs.jar
 %{_firefoxdir}/chrome/help.jar
 # -dom-inspector subpackage?
-#%{_firefoxdir}/chrome/inspector.jar
+%{_firefoxdir}/chrome/inspector.jar
 %{_firefoxdir}/chrome/modern.jar
 %{_firefoxdir}/chrome/pip*.jar
+# -sroaming subpackage?
+%{_firefoxdir}/chrome/sroaming.jar
 %{_firefoxdir}/chrome/toolkit.jar
 %{_firefoxdir}/chrome/mozilla-firefox-misc-installed-chrome.txt
-%{_firefoxdir}/chrome/icons/default
+##%{_firefoxdir}/chrome/icons/default
 
 %files lang-en
 %defattr(644,root,root,755)
-%{_firefoxdir}/chrome/en-US.jar
+%{_firefoxdir}/chrome/*US.jar
+%{_firefoxdir}/chrome/en-unix.jar
 %{_firefoxdir}/chrome/mozilla-firefox-en-US-installed-chrome.txt

@@ -89,7 +89,7 @@ Anglojêzyczne zasoby dla Mozilla-FireFox
 %patch1 -p1
 %patch2 -p1
 %{?with_ft218:%patch3 -p1}
-%patch4 -p1
+%patch4 -p0
 
 %build
 export CFLAGS="%{rpmcflags}"

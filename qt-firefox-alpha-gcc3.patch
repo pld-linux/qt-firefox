@@ -1,0 +1,75 @@
+--- mozilla/xpcom/reflect/xptcall/src/md/unix/xptcstubs_linux_alpha.cpp.orig	Fri Sep 28 22:12:52 2001
++++ mozilla/xpcom/reflect/xptcall/src/md/unix/xptcstubs_linux_alpha.cpp	Tue Jun 24 15:32:39 2003
+@@ -188,6 +188,50 @@
+  * nsresult nsXPTCStubBase::Stub##n()
+  *  Sets register $1 to "methodIndex" and jumps to SharedStub.
+  */
++#if defined(__GXX_ABI_VERSION) && __GXX_ABI_VERSION >= 100 /* G++ V3 ABI */
++// gcc3 mangling tends to insert the length of the method name
++#define STUB_ENTRY(n) \
++__asm__( \
++    "#### Stub"#n" ####\n" \
++".text\n\t" \
++    ".align 5\n\t" \
++    ".if	" #n " < 10\n\t" \
++    ".globl _ZN14nsXPTCStubBase5Stub" #n "Ev\n\t" \
++    ".ent _ZN14nsXPTCStubBase5Stub" #n "Ev\n" \
++"_ZN14nsXPTCStubBase5Stub" #n "Ev:\n\t" \
++    ".elseif	" #n " < 100\n\t" \
++    ".globl _ZN14nsXPTCStubBase6Stub" #n "Ev\n\t" \
++    ".ent _ZN14nsXPTCStubBase6Stub" #n "Ev\n" \
++"_ZN14nsXPTCStubBase6Stub" #n "Ev:\n\t" \
++    ".elseif    " #n " < 1000\n\t" \
++    ".globl _ZN14nsXPTCStubBase7Stub" #n "Ev\n\t" \
++    ".ent _ZN14nsXPTCStubBase7Stub" #n "Ev\n" \
++"_ZN14nsXPTCStubBase7Stub" #n "Ev:\n\t" \
++    ".else\n\t" \
++    ".err	\"stub number " #n " >= 1000 not yet supported\"\n\t" \
++    ".endif\n\t" \
++    ".frame $30,0,$26,0\n\t" \
++    "ldgp $29,0($27)\n" \
++    ".if	" #n " < 10\n\t" \
++"$_ZN14nsXPTCStubBase5Stub" #n "Ev..ng:\n\t" \
++    ".elseif	" #n " < 100\n\t" \
++"$_ZN14nsXPTCStubBase6Stub" #n "Ev..ng:\n\t" \
++    ".else\n\t" \
++"$_ZN14nsXPTCStubBase7Stub" #n "Ev..ng:\n\t" \
++    ".endif\n\t" \
++    ".prologue 1\n\t" \
++    "lda $1,"#n"\n\t" \
++    ".if	" #n " < 10\n\t" \
++    "br $31,$SharedStub..ng\n\t" \
++    ".end _ZN14nsXPTCStubBase5Stub" #n "Ev\n\t" \
++    ".elseif	" #n " < 100\n\t" \
++    "br $31,$SharedStub..ng\n\t" \
++    ".end _ZN14nsXPTCStubBase6Stub" #n "Ev\n\t" \
++    ".else\n\t" \
++    "br $31,$SharedStub..ng\n\t" \
++    ".end _ZN14nsXPTCStubBase7Stub" #n "Ev\n\t" \
++    ".endif");
++#else
+ #define STUB_ENTRY(n) \
+ __asm__( \
+     "#### Stub"#n" ####\n" \
+@@ -204,6 +248,7 @@
+     "br $31,$SharedStub..ng\n\t" \
+     ".end Stub"#n"__14nsXPTCStubBase" \
+     );
++#endif
+ 
+ #define SENTINEL_ENTRY(n) \
+ nsresult nsXPTCStubBase::Sentinel##n() \
+--- mozilla/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_linux_alpha.cpp.orig	Fri Sep 28 22:12:51 2001
++++ mozilla/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_linux_alpha.cpp	Wed Jun 25 14:08:20 2003
+@@ -163,7 +163,11 @@
+     "bis $16,$16,$1\n\t"    /* load "this" */
+     "ldq $2,16($15)\n\t"    /* load "methodIndex" */
+     "ldq $1,0($1)\n\t"      /* load vtable */
++#if defined(__GXX_ABI_VERSION) && __GXX_ABI_VERSION >= 100 /* G++ V3 ABI */
++    "s8addq $2,0,$2\n\t"
++#else
+     "s8addq $2,16,$2\n\t"   /* vtable index = "methodIndex" * 8 + 16 */
++#endif
+     "addq $1,$2,$1\n\t"
+     "ldq $27,0($1)\n\t"     /* load address of function */
+     "jsr $26,($27),0\n\t"   /* call virtual function */

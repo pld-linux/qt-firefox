@@ -1,0 +1,32 @@
+diff -ur firefox.orig/config/autoconf.mk.in firefox/config/autoconf.mk.in
+--- firefox.orig/config/autoconf.mk.in	2004-03-21 03:31:17.000000000 +0100
++++ firefox/config/autoconf.mk.in	2004-06-17 09:50:30.000000000 +0200
+@@ -37,7 +37,7 @@
+ mandir		= @mandir@
+ idldir		= @datadir@/idl/$(MOZ_APP_NAME)-$(MOZ_APP_VERSION)
+ 
+-mozappdir	= $(libdir)/$(MOZ_APP_NAME)-$(MOZ_APP_VERSION)
++mozappdir	= $(libdir)/mozilla-$(MOZ_APP_NAME)
+ mredir		= $(libdir)/mre/mre-$(MOZ_APP_VERSION)
+ mrelibdir	= $(mredir)/lib
+ 
+--- mozilla/configure.orgi	2004-11-28 15:30:26.212386140 +0100
++++ mozilla/configure	2004-11-28 15:29:41.356113362 +0100
+@@ -15580,7 +15580,7 @@
+       unset NEXT_ROOT
+     fi
+ 
+-    if test "$MOZ_ENABLE_GTK2"; then
++#    if test "$MOZ_ENABLE_GTK2"; then
+         
+   succeeded=no
+ 
+@@ -15672,7 +15672,7 @@
+      { echo "configure: error: Library requirements (libIDL-2.0 >= 0.8.0) not met; consider adjusting the PKG_CONFIG_PATH environment variable if your libraries are in a nonstandard prefix so pkg-config can find them." 1>&2; exit 1; }
+   fi
+ 
+-    fi
++#    fi
+     if test -z "$_LIBIDL_FOUND"; then
+         # Check whether --with-libIDL-prefix or --without-libIDL-prefix was given.
+ if test "${with_libIDL_prefix+set}" = set; then

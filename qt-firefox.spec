@@ -10,12 +10,12 @@ Version:	1.0
 Release:	0.%{_snap}.1
 License:	MPL/LGPL
 Group:		X11/Applications/Networking
-%if %{without cvs}
+#if %{without cvs}
 Source0:	http://ep09.pld-linux.org/~djurban/snap/firefox-%{_snap}.tar.bz2
 # Source0-md5:	66393c13b9877a8519fba9869063f7be
-%else
-Source0:	kdesource.tar.gz
-%endif
+#else
+#Source0:	kdesource.tar.gz
+#endif
 Source1:	%{name}.desktop
 Source2:	%{name}.sh
 Patch0:		%{name}-alpha-gcc3.patch

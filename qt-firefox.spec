@@ -1,5 +1,5 @@
 # Conditional build:
-%bcond_with	ft218	# compile with freetype >= 2.1.8
+%bcond_without	ft218	# compile with freetype < 2.1.8
 %bcond_with	cvs
 #
 %define 	_snap	041128

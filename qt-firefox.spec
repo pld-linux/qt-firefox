@@ -270,7 +270,7 @@ cat %{_firefoxdir}/chrome/*-installed-chrome.txt >%{_firefoxdir}/chrome/installe
 %endif
 %{_firefoxdir}/bloaturls.txt
 %{_pixmapsdir}/*
-%{_desktopdir}/*
+%{_desktopdir}/*.desktop
 
 %dir %{_firefoxdir}/chrome
 %{_firefoxdir}/chrome/browser.jar

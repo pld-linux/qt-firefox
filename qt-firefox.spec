@@ -4,7 +4,7 @@
 #
 %define 	_snap	041128
 Summary:	Mozilla Firefox web browser
-Summary(pl):	Mozilla Firefox - przegl±darka WWW
+Summary(pl.UTF-8):   Mozilla Firefox - przeglÄ…darka WWW
 Name:		qt-firefox
 Version:	1.0
 Release:	0.%{_snap}.1
@@ -62,13 +62,13 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Mozilla Firefox is an open-source web browser, designed for standards
 compliance, performance and portability.
 
-%description -l pl
-Mozilla Firefox jest open sourcow± przegl±dark± sieci WWW, stworzon± z
-my¶l± o zgodno¶ci ze standardami, wydajno¶ci± i przeno¶no¶ci±.
+%description -l pl.UTF-8
+Mozilla Firefox jest open sourcowÄ… przeglÄ…darkÄ… sieci WWW, stworzonÄ… z
+myÅ›lÄ… o zgodnoÅ›ci ze standardami, wydajnoÅ›ciÄ… i przenoÅ›noÅ›ciÄ….
 
 %package lang-en
 Summary:	English resources for Mozilla-firefox
-Summary(pl):	Anglojêzyczne zasoby dla Mozilla-FireFox
+Summary(pl.UTF-8):   AnglojÄ™zyczne zasoby dla Mozilla-FireFox
 Group:		X11/Applications/Networking
 Requires(post,postun):	%{name} = %{version}-%{release}
 Requires(post,postun):	textutils
@@ -78,8 +78,8 @@ Provides:	%{name}-lang-resources = %{version}-%{release}
 %description lang-en
 English resources for Mozilla-firefox
 
-%description lang-en -l pl
-Anglojêzyczne zasoby dla Mozilla-FireFox
+%description lang-en -l pl.UTF-8
+AnglojÄ™zyczne zasoby dla Mozilla-FireFox
 
 %prep
 %setup -q -n mozilla %{?with_cvs: -D}

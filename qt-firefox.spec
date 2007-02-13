@@ -4,7 +4,7 @@
 #
 %define 	_snap	041128
 Summary:	Mozilla Firefox web browser
-Summary(pl.UTF-8):   Mozilla Firefox - przeglądarka WWW
+Summary(pl.UTF-8):	Mozilla Firefox - przeglądarka WWW
 Name:		qt-firefox
 Version:	1.0
 Release:	0.%{_snap}.1
@@ -68,7 +68,7 @@ myślą o zgodności ze standardami, wydajnością i przenośnością.
 
 %package lang-en
 Summary:	English resources for Mozilla-firefox
-Summary(pl.UTF-8):   Anglojęzyczne zasoby dla Mozilla-FireFox
+Summary(pl.UTF-8):	Anglojęzyczne zasoby dla Mozilla-FireFox
 Group:		X11/Applications/Networking
 Requires(post,postun):	%{name} = %{version}-%{release}
 Requires(post,postun):	textutils

@@ -1,0 +1,3 @@
+- added nspr,nss patches, use system nspr and nss
+- added _noautoreqdep for libs provided by both mozilla and firefox
+- versioned lang-resources deps

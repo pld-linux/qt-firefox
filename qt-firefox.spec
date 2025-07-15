@@ -85,8 +85,8 @@ Anglojęzyczne zasoby dla Mozilla-FireFox
 %setup -q -n mozilla %{?with_cvs: -D}
 # Seems the firefox team has added their own gcc3 fixes for alpha asm.
 #patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch -P1 -p1
+%patch -P2 -p1
 %{?with_ft218:%patch3 -p1}
 
 %build
